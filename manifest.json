@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "my-trello-extension",
+  "description": "My Trello Chrome Extension",
+  "version": "0.1.0",
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "css": [ "mytrello.css" ],
+      "matches": [ "https://trello.com/*" ]
+    }
+  ]
+}
