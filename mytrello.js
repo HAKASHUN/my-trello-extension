@@ -4,10 +4,12 @@
   var config = {
     padding: 11,
     maxWidth: 260,
-    minWidth: 140
+    minWidth: 140,
+    label: 'Slim Lists'
   };
 
   var button = createButton();
+  var slimmed = false;
 
   init();
 
@@ -33,14 +35,36 @@
     fitButtonElement.className = 'board-header-btn';
     var fitButtonTextElement = document.createElement('span');
     fitButtonTextElement.className = 'board-header-btn-text';
-    fitButtonTextElement.textContent = 'Slim Lists';
+    fitButtonTextElement.textContent = config.label;
     var fitButtonIconElement = document.createElement('span');
     fitButtonIconElement.className = 'board-header-btn-icon icon-sm icon-board';
     fitButtonElement.appendChild(fitButtonIconElement);
     fitButtonElement.appendChild(fitButtonTextElement);
-    fitButtonElement.addEventListener('click', fitLists);
+    fitButtonElement.addEventListener('click', handleClick);
 
     return fitButtonElement;
+  }
+
+  function handleClick() {
+    if (slimmed) {
+      unfitLists();
+    } else {
+      fitLists();
+    }
+  }
+
+  function updateButtonStatus() {
+    var textElement = button.getElementsByClassName('board-header-btn-text');
+
+    if (!textElement[0]) {
+      return;
+    }
+
+    if (slimmed) {
+      textElement[0].textContent = 'Fat Lists';
+    } else {
+      textElement[0].textContent = config.label;
+    }
   }
 
   function addButton() {
@@ -48,6 +72,7 @@
     if(!container[0]) {
       return;
     }
+    slimmed = false;
     container[0].appendChild(button);
   }
 
@@ -59,6 +84,9 @@
     if (!lists[0] || !listAreaWrapper[0] || !listArea) {
       return;
     }
+
+    slimmed = true;
+    updateButtonStatus();
 
     var maxWidth = config.maxWidth;
     var minWidth = config.minWidth;
@@ -82,6 +110,23 @@
     if(idealListWidth < maxWidth) {
       listArea.style.width = newListAreaWidth + 'px!important';
     }
+  }
+
+  function unfitLists() {
+    var lists = document.getElementsByClassName('list-wrapper');
+    var listArea = document.getElementById('board');
+
+    if (!lists[0] || !listArea) {
+      return;
+    }
+
+    slimmed = false;
+    updateButtonStatus();
+
+    for(var i = 0, listCount = lists.length; i < listCount; i++) {
+      lists[i].style.width = '';
+    }
+    listArea.style.width = '';
   }
 
 
