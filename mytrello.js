@@ -136,7 +136,7 @@
 
     }
     if(idealListWidth < maxWidth) {
-      sheet.insertRule('#board{width:' + newListAreaWidth + 'px!important; font-size:'+ idealFontSize +'px!important}', 0);
+      sheet.insertRule('#board{font-size:'+ idealFontSize +'px!important}', 0);
     }
 
   }
