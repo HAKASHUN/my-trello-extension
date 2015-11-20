@@ -7,7 +7,10 @@
     minWidth: 140,
     maxFontSize: 18,
     minFontSize: 12,
-    label: 'Slim Lists'
+    maxMemberSize: 30,
+    minMemberSize: 20,
+    label: 'Slim Lists',
+    title: 'my-trello-extension'
   };
 
   var button = createButton();
@@ -21,6 +24,7 @@
         var record = records[i];
         if(record.target.id === 'content') {
           addButton();
+          unfitLists();
           break;
         }
       }
@@ -96,55 +100,55 @@
     var padding = config.padding;
     var maxFontSize = config.maxFontSize;
     var minFontSize = config.minFontSize;
+    var maxMemberSize = config.maxMemberSize;
+    var minMemberSize = config.minMemberSize;
     var listAreaWrapperWidth = listAreaWrapper[0].offsetWidth;
     var idealListWidth = Math.floor((listAreaWrapperWidth / (lists.length - 1)) - padding);
     var idealFontSize = Math.floor(maxFontSize * idealListWidth / maxWidth);
+    var idealMemberSize = Math.floor(maxMemberSize * idealListWidth / maxWidth);
     if (idealFontSize < minFontSize) {
-      idealFontSize = minFontSize
+      idealFontSize = minFontSize;
+    }
+    if (idealMemberSize < minMemberSize) {
+      idealMemberSize = minMemberSize;
     }
     var newListAreaWidth = 0;
+    var styleElement = document.createElement('style');
+    styleElement.id = config.title;
+    styleElement.setAttribute("type", "text/css");
+    document.getElementsByTagName('head').item(0).appendChild(styleElement);
 
+    var sheet = styleElement.sheet;
     if(listAreaWrapperWidth < (lists.length * maxWidth)) {
-      for(var i = 0, listCount = lists.length; i < listCount; i++) {
-        if(idealListWidth > minWidth && idealListWidth < maxWidth) {
-          lists[i].style.width = idealListWidth + 'px';
-          newListAreaWidth += (idealListWidth + padding);
-          if (listHeaderName[i]) {
-            listHeaderName[i].style.fontSize = idealFontSize + 'px';
-          }
-        } else if(idealListWidth <= minWidth) {
-          idealListWidth = minWidth;
-          lists[i].style.width = idealListWidth + 'px';
-          newListAreaWidth += (minWidth + padding);
-          if (listHeaderName[i]) {
-            listHeaderName[i].style.fontSize = idealFontSize + 'px';
-          }
-        }
+
+      if(idealListWidth > minWidth && idealListWidth < maxWidth) {
+        sheet.insertRule('.list-wrapper{width:' + idealListWidth + 'px}', 0);
+        sheet.insertRule('.list-header-name{font-size:'+ idealFontSize +'px}', 0);
+        sheet.insertRule('.member, .member-avatar, .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
+        newListAreaWidth = (idealListWidth + padding) * lists.length;
+      } else if (idealListWidth <= minWidth) {
+        idealListWidth = minWidth;
+        sheet.insertRule('.list-wrapper{width:' + idealListWidth + 'px}', 0);
+        sheet.insertRule('.list-header-name{font-size:'+ idealFontSize +'px}', 0);
+        sheet.insertRule('.member, .member-avatar, .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
+        newListAreaWidth = (minWidth + padding) * lists.length;
       }
+
     }
     if(idealListWidth < maxWidth) {
-      listArea.style.width = newListAreaWidth + 'px!important';
-      listArea.style.fontSize = idealFontSize + 'px';
+      sheet.insertRule('#board{width:' + newListAreaWidth + 'px!important; font-size:'+ idealFontSize +'px!important}', 0);
     }
 
   }
 
   function unfitLists() {
-    var lists = document.getElementsByClassName('list-wrapper');
-    var listArea = document.getElementById('board');
-
-    if (!lists[0] || !listArea) {
+    var styleElement = document.getElementById(config.title);
+    if (!styleElement) {
       return;
     }
-
     slimmed = false;
     updateButtonStatus();
-
-    for(var i = 0, listCount = lists.length; i < listCount; i++) {
-      lists[i].style.width = '';
-    }
-    listArea.style.width = '';
-    listArea.style.fontSize = '';
+    styleElement.remove();
   }
 
 
