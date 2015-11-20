@@ -5,9 +5,10 @@
   "version": "0.1.0",
   "content_scripts": [
     {
-      "all_frames": true,
       "css": [ "mytrello.css" ],
-      "matches": [ "https://trello.com/*" ]
+      "js": [ "mytrello.js" ],
+      "matches": [ "*://trello.com/*" ],
+      "run_at": "document_end"
     }
   ]
 }
