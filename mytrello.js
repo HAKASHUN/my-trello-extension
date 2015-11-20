@@ -5,7 +5,7 @@
     padding: 11,
     maxWidth: 260,
     minWidth: 140,
-    maxFontSize: 18,
+    maxFontSize: 14,
     minFontSize: 12,
     maxMemberSize: 30,
     minMemberSize: 20,
