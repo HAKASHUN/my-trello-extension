@@ -124,13 +124,13 @@
       if(idealListWidth > minWidth && idealListWidth < maxWidth) {
         sheet.insertRule('.list-wrapper{width:' + idealListWidth + 'px}', 0);
         sheet.insertRule('.list-header-name{font-size:'+ idealFontSize +'px}', 0);
-        sheet.insertRule('.member, .member-avatar, .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
+        sheet.insertRule('.list-card-details .member, .list-card-details .member-avatar, .list-card-details .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
         newListAreaWidth = (idealListWidth + padding) * lists.length;
       } else if (idealListWidth <= minWidth) {
         idealListWidth = minWidth;
         sheet.insertRule('.list-wrapper{width:' + idealListWidth + 'px}', 0);
         sheet.insertRule('.list-header-name{font-size:'+ idealFontSize +'px}', 0);
-        sheet.insertRule('.member, .member-avatar, .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
+        sheet.insertRule('.list-card-details .member, .list-card-details .member-avatar, .list-card-details .member-initials{width:'+ idealMemberSize +'px; height:'+ idealMemberSize +'px; line-height:' + idealMemberSize + 'px}', 0);
         newListAreaWidth = (minWidth + padding) * lists.length;
       }
 
