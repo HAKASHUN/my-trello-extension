@@ -5,6 +5,8 @@
     padding: 11,
     maxWidth: 260,
     minWidth: 140,
+    maxFontSize: 18,
+    minFontSize: 12,
     label: 'Slim Lists'
   };
 
@@ -80,8 +82,9 @@
     var lists = document.getElementsByClassName('list-wrapper');
     var listArea = document.getElementById('board');
     var listAreaWrapper = document.getElementsByClassName('board-wrapper');
+    var listHeaderName = document.getElementsByClassName('list-header-name');
 
-    if (!lists[0] || !listAreaWrapper[0] || !listArea) {
+    if (!lists[0] || !listAreaWrapper[0] || !listArea || !listHeaderName[0]) {
       return;
     }
 
@@ -91,8 +94,14 @@
     var maxWidth = config.maxWidth;
     var minWidth = config.minWidth;
     var padding = config.padding;
+    var maxFontSize = config.maxFontSize;
+    var minFontSize = config.minFontSize;
     var listAreaWrapperWidth = listAreaWrapper[0].offsetWidth;
     var idealListWidth = Math.floor((listAreaWrapperWidth / (lists.length - 1)) - padding);
+    var idealFontSize = Math.floor(maxFontSize * idealListWidth / maxWidth);
+    if (idealFontSize < minFontSize) {
+      idealFontSize = minFontSize
+    }
     var newListAreaWidth = 0;
 
     if(listAreaWrapperWidth < (lists.length * maxWidth)) {
@@ -100,16 +109,24 @@
         if(idealListWidth > minWidth && idealListWidth < maxWidth) {
           lists[i].style.width = idealListWidth + 'px';
           newListAreaWidth += (idealListWidth + padding);
+          if (listHeaderName[i]) {
+            listHeaderName[i].style.fontSize = idealFontSize + 'px';
+          }
         } else if(idealListWidth <= minWidth) {
           idealListWidth = minWidth;
           lists[i].style.width = idealListWidth + 'px';
           newListAreaWidth += (minWidth + padding);
+          if (listHeaderName[i]) {
+            listHeaderName[i].style.fontSize = idealFontSize + 'px';
+          }
         }
       }
     }
     if(idealListWidth < maxWidth) {
       listArea.style.width = newListAreaWidth + 'px!important';
+      listArea.style.fontSize = idealFontSize + 'px';
     }
+
   }
 
   function unfitLists() {
@@ -127,6 +144,7 @@
       lists[i].style.width = '';
     }
     listArea.style.width = '';
+    listArea.style.fontSize = '';
   }
 
 
