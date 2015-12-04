@@ -256,7 +256,7 @@
       unwideList(e)
     }
 
-    boardElement.scrollLeft = listWrapperElement.offsetLeft;
+    boardElement.scrollLeft = (listWrapperElement.offsetLeft - config.padding > 0) ? listWrapperElement.offsetLeft - config.padding : 0;
 
   }
 
