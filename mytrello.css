@@ -22,4 +22,32 @@
     margin-bottom: 2px;
     color: #8c8c8c !important;
 }
+.list-header {
+  padding: 8px 60px 8px 10px !important;
+}
 
+.js-list-wider-btn {
+  position: absolute;
+  top: 0;
+  right: 34px;
+  background-clip: content-box;
+  background-origin: content-box;
+  padding: 8px 0 8px 8px;
+}
+
+@keyframes fade-in {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}

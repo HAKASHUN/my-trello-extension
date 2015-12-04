@@ -12,3 +12,4 @@
 1. show label name
 2. show card number
 3. add "Slim Lists" button on your board
+4. add "Wide Lists" button on your card lists
