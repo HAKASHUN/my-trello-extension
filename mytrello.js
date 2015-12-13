@@ -1,6 +1,16 @@
 (function(){
   'use strict';
 
+  var fontDefinition =
+    '@font-face {' +
+    'font-family: "my-trello-extension-font";' +
+    'src: url("' + chrome.extension.getURL("/fonts/my-trello-extension-font.ttf") + '");' +
+    '}';
+  var styleNode = document.createElement ("style");
+  styleNode.type          = "text/css";
+  styleNode.textContent = fontDefinition;
+  document.head.appendChild (styleNode);
+
   var config = {
     padding: 11,
     maxWidth: 270,
@@ -48,7 +58,7 @@
     fitButtonTextElement.className = 'board-header-btn-text';
     fitButtonTextElement.textContent = config.label.slim;
     var fitButtonIconElement = document.createElement('span');
-    fitButtonIconElement.className = 'board-header-btn-icon icon-sm icon-board';
+    fitButtonIconElement.className = 'board-header-btn-icon icon-mte icon-mte-slim';
     fitButtonElement.appendChild(fitButtonIconElement);
     fitButtonElement.appendChild(fitButtonTextElement);
     fitButtonElement.addEventListener('click', handleFit);
@@ -107,7 +117,7 @@
 
       if (buttonWrapperElement) {
         var buttonElement = document.createElement('a');
-        buttonElement.className = 'js-list-wider-btn icon-sm icon-card-cover';
+        buttonElement.className = 'js-list-wider-btn icon-mte icon-mte-wider';
         buttonWrapperElement.appendChild(buttonElement);
         buttonElement.addEventListener('click', handleWider);
       }
