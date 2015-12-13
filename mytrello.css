@@ -33,6 +33,36 @@
   background-clip: content-box;
   background-origin: content-box;
   padding: 8px 0 8px 8px;
+  color: #999;
+}
+
+.js-list-wider-btn:hover {
+  color: #4d4d4d;
+}
+
+.js-list-wider-btn:before {
+  content: "\EA01"
+}
+
+.icon-mte {
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 9pt;
+  text-align: center;
+  display: inline-block;
+  font-family: "my-trello-extension-font";
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mte-slim:before {
+  content: "\EA02"
+}
+.icon-mte-wider:before {
+  content: "\EA01"
 }
 
 @keyframes fade-in {
