@@ -46,6 +46,13 @@
         if(record.target.classList.contains('list-card-title')) {
           var card = getClosestClassElement(record.target, 'list-card');
           generateTags(card)
+        } else if(record.target.classList.contains('list-cards')) {
+          var cards = record.target.getElementsByClassName('list-card');
+          for (var j = 0; j < cards.length; j++) {
+            var card = cards[j];
+            generateTags(card);
+            generateMDLink(card)
+          }
         }
       }
     });
@@ -62,6 +69,9 @@
   function generateTags(card) {
     var container = card.getElementsByClassName('badges')[0];
     var title = card.getElementsByClassName('list-card-title')[0];
+    if (!container || !title) {
+      return;
+    }
     var titleClone = title.cloneNode(true);
     var spanTitle = titleClone.getElementsByClassName('card-short-id')[0];
     spanTitle && titleClone.removeChild(spanTitle);
@@ -396,6 +406,50 @@
     }
 
     return selector + '{' + rule + '}';
+  }
+
+  function throttle (callback, limit) {
+    var wait = false;                  // Initially, we're not waiting
+    return function () {               // We return a throttled function
+      if (!wait) {                   // If we're not waiting
+        callback.call();           // Execute users function
+        wait = true;               // Prevent future invocations
+        setTimeout(function () {   // After a period of time
+          wait = false;          // And allow future invocations
+        }, limit);
+      }
+    }
+  }
+
+  function debounce(delay, callback, accumulateData) {
+    var timeout = null;
+    var theData = [];
+    return function () {
+      //
+      // accumulate arguments in case caller is interested
+      // in that data
+      //
+      if (accumulateData) {
+        var arr = [];
+        for (var i = 0; i < arguments.length; ++i)
+          arr.push(arguments[i]);
+        theData.push(arr);
+      }
+
+      //
+      // if a timeout has been registered before then
+      // cancel it so that we can setup a fresh timeout
+      //
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      var args = arguments;
+      timeout = setTimeout(function () {
+        callback.apply((accumulateData) ? { data: theData } : null, args);
+        theData = []; // clear the data array
+        timeout = null;
+      }, delay);
+    };
   }
 
 })();
