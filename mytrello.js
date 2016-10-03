@@ -40,15 +40,90 @@
           addWiderButton();
           unwideLists();
           unfitLists();
+          showExtraCardUI();
           break;
+        }
+        if(record.target.classList.contains('list-card-title')) {
+          var card = getClosestClassElement(record.target, 'list-card');
+          generateTags(card)
         }
       }
     });
+
     ob.observe(document.body, {
       attributes: false,
       childList: true,
       subtree: true
     });
+
+  }
+
+
+  function generateTags(card) {
+    var container = card.getElementsByClassName('badges')[0];
+    var title = card.getElementsByClassName('list-card-title')[0];
+    var titleClone = title.cloneNode(true);
+    var spanTitle = titleClone.getElementsByClassName('card-short-id')[0];
+    spanTitle && titleClone.removeChild(spanTitle);
+    var titleText = titleClone.textContent;
+    var parsedTags = titleText.match(/\{([^{}]+)\}/g) || [];
+    if (parsedTags.length > 0) {
+      var existTags = container.getElementsByClassName('badge project');
+      while (existTags.length > 0) {
+        existTags[0].remove();
+      }
+      for (var j = 0; j < parsedTags.length; j++) {
+        titleText = titleText.replace(parsedTags[j], '').trim();
+        var parsedTagLabel = parsedTags[j].match(/\{([^{}]+)\}/);
+        var tagLabel = parsedTagLabel ? parsedTagLabel[1] : "";
+        var tagEl = document.createElement('div');
+        tagEl.className = 'badge project';
+        tagEl.textContent = tagLabel;
+        container && container.appendChild(tagEl);
+      }
+      title.lastChild.textContent = titleText
+    }
+  }
+
+  function generateMDLink(card) {
+    var title = card.getElementsByClassName('list-card-title')[0];
+    var buttonElement = document.createElement('span');
+    var closetElement = card.getElementsByClassName('js-open-quick-card-editor')[0];
+    buttonElement.className = 'icon-mte icon-mte-md dark-hover list-card-markdown-link-operation';
+
+    card.insertBefore(buttonElement, closetElement);
+
+    buttonElement.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var copyFrom = document.createElement("textarea");
+      var markdownText = [
+        '[',
+          title.firstChild.textContent,
+          ' ',
+          title.lastChild.textContent,
+        '](',
+          title.href,
+        ')'
+      ].join('');
+      copyFrom.textContent = markdownText;
+      document.body.appendChild(copyFrom);
+      copyFrom.select();
+      document.execCommand('copy');
+      document.body.removeChild(copyFrom)
+    });
+  }
+
+  function showExtraCardUI() {
+    var lists = document.getElementsByClassName('list');
+    for (var i = 0; i < lists.length; i++) {
+      var list = lists[i];
+      var cards = list.getElementsByClassName('list-card');
+      for (var j = 0; j < cards.length; j++) {
+        var card = cards[j];
+        generateTags(card);
+        generateMDLink(card)
+      }
+    }
   }
 
   function createFitButton() {
@@ -121,9 +196,7 @@
         buttonWrapperElement.appendChild(buttonElement);
         buttonElement.addEventListener('click', handleWider);
       }
-
     }
-
   }
 
   function fitLists() {
