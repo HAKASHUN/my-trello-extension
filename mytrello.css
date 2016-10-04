@@ -64,6 +64,9 @@
 .icon-mte-wider:before {
   content: "\EA01"
 }
+.icon-mte-md:before {
+  content: "\EA03"
+}
 
 @keyframes fade-in {
   0% {
@@ -80,4 +83,45 @@
     display: block;
     opacity: 1;
   }
+}
+
+.project {
+  background-color: #8c8c8c !important;
+  border-radius: 3px;
+  color: #e1fafb !important;
+  float: left;
+  font-size: .7142857142857143rem;
+  line-height: 1.142857142857143rem!important;
+  text-align: left;
+  background-repeat: no-repeat !important;
+  background-position: 3px 3px !important;
+  padding: 0 4px!important;
+}
+
+.project:empty {
+  display: none;
+}
+
+.list-card-markdown-link-operation {
+  background-color: #EDEFF0;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  border-radius: 3px;
+  opacity: .8;
+  padding: 4px;
+  position: absolute;
+  right: 33px;
+  top: 3px;
+  visibility: hidden;
+  z-index: 40;
+  color: #999;
+}
+
+.list-card.active-card .list-card-markdown-link-operation {
+  visibility: visible
+}
+
+.list-card-markdown-link-operation:hover {
+  background-color: #D6DADC;
+  opacity: 1;
 }
