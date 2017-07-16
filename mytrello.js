@@ -58,7 +58,7 @@
     });
 
     ob.observe(document.body, {
-      attributes: true,
+      attributes: false,
       childList: true,
       subtree: true
     });
