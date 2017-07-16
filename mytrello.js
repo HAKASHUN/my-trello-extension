@@ -33,8 +33,8 @@
 
   function init() {
     var ob = new MutationObserver(function(records){
-      for (var i = 0; i < records.length; i++) {
-        var record = records[i];
+      for (var i = 0; i < records.length; i++) {        
+        var record = records[i];        
         if(record.target.id === 'content') {
           addFitButton();
           addWiderButton();
@@ -103,7 +103,7 @@
 
     card.insertBefore(buttonElement, closetElement);
 
-    buttonElement.addEventListener('click', function(e) {
+    buttonElement.addEventListener('click', function(e) {    
       e.stopPropagation();
       var copyFrom = document.createElement("textarea");
       var markdownText = [
@@ -112,7 +112,7 @@
           ' ',
           title.lastChild.textContent,
         '](',
-          title.href,
+          generateUrlForMDLink(card),
         ')'
       ].join('');
       copyFrom.textContent = markdownText;
@@ -121,6 +121,14 @@
       document.execCommand('copy');
       document.body.removeChild(copyFrom)
     });
+  }
+  
+  // Markdownリンクの末尾にページのtitleが含まれて
+  // しまいリンクが冗長になる問題を解決
+  function generateUrlForMDLink(card) {
+    var urlComp = card.href.split("/");
+    urlComp.pop();
+    return urlComp.join("/");
   }
 
   function showExtraCardUI() {
