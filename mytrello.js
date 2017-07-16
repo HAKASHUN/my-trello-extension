@@ -104,7 +104,7 @@
     card.insertBefore(buttonElement, closetElement);
 
     buttonElement.addEventListener('click', function(e) {    
-      e.stopPropagation();
+      // e.stopPropagation();
       var copyFrom = document.createElement("textarea");
       var markdownText = [
         '[',
