@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "my-trello-extension",
-  "description": "My Trello Chrome Extension",
-  "version": "0.1.0",
+  "name": "strobo-trello-extension",
+  "description": "Extension for Trello by Strobo",
+  "version": "1.0.0",
   "content_scripts": [
     {
       "css": [ "mytrello.css" ],
